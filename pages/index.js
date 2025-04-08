@@ -28,7 +28,9 @@ export default function Home() {
     Papa.parse(file, {
       header: true,
       complete: (result) => {
-        const data = result.data.filter((row) => Object.values(row).some((cell) => cell !== ""));
+        const data = result.data.filter((row) =>
+          Object.values(row).some((cell) => cell !== "")
+        );
         setCsvData(data);
         calculateAverages(data);
         calculatePerformanceGroups(data);
@@ -63,8 +65,12 @@ export default function Home() {
     const groups = { Poor: [], Mid: [], Excellent: [] };
 
     data.forEach((row) => {
-      const subjects = Object.keys(row).filter((key) => key !== "Name" && key !== "Pass");
-      const scores = subjects.map((subj) => parseFloat(row[subj])).filter((score) => !isNaN(score));
+      const subjects = Object.keys(row).filter(
+        (key) => key !== "Name" && key !== "Pass"
+      );
+      const scores = subjects
+        .map((subj) => parseFloat(row[subj]))
+        .filter((score) => !isNaN(score));
       const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
 
       if (avg < 35) groups.Poor.push(row.Name);
@@ -94,13 +100,39 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-100 via-white to-blue-100 py-10 px-6">
+    <div className="min-h-screen bg-gradient-to-r from-sky-100 via-white to-sky-100 py-10 px-6">
       <div className="max-w-5xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-3xl font-bold text-center mb-6">📊 InsightPlan - Smart Performance Tracker</h1>
+        <h1 className="text-3xl font-bold text-center mb-6">
+          📊 InsightPlan - Smart Performance Tracker
+        </h1>
         <p className="text-gray-600 text-center mb-4">
           Upload a CSV file of student marks to get insights, AI tips & performance charts 📈
         </p>
 
+        {/* CSV Format Instructions */}
+        <div className="mb-6 p-4 border-l-4 border-blue-500 bg-blue-50 rounded-lg shadow-sm">
+          <h2 className="text-lg font-semibold mb-2 text-blue-800">📄 CSV Format Instructions</h2>
+          <p className="text-gray-700 mb-2">
+            Please ensure your CSV file includes the following columns for accurate analysis:
+          </p>
+          <ul className="list-disc ml-6 text-sm text-gray-800 space-y-1">
+            <li><strong>Name</strong> – Student's full name</li>
+            <li><strong>Math</strong> – Marks in Mathematics</li>
+            <li><strong>Science</strong> – Marks in Science</li>
+            <li><strong>Computer</strong> – Marks in Computer Science</li>
+            <li><strong>English</strong> – Marks in English</li>
+            <li><strong>Hindi</strong> – Marks in Hindi</li>
+          </ul>
+          <p className="mt-2 text-gray-600 text-sm">
+            🔄 <strong>You can also add extra columns</strong> like <em>Attendance, Participation, Discipline</em>, etc.
+            These won't affect performance analysis unless they are numeric and treated like marks.
+          </p>
+          <p className="mt-1 text-gray-600 text-sm">
+            ✅ The app will auto-detect numeric fields (excluding "Name" and "Pass") and calculate performance based on them.
+          </p>
+        </div>
+
+        {/* File Upload */}
         <div className="flex items-center justify-center gap-3 mb-6">
           <label className="block">
             <input
@@ -162,58 +194,36 @@ export default function Home() {
             </div>
 
             {/* AI Suggestions */}
-            <div className="mt-6 p-6 border rounded-lg bg-green-50 shadow-md text-gray-800 text-base leading-relaxed space-y-3">
-              <h2 className="text-2xl font-bold text-green-900 mb-4">🧠 AI-Powered Study Tips & Subject Support</h2>
-
-              <p className="font-bold text-lg">🔬 Science – 47.22%</p>
-              <ul className="ml-4 list-disc">
-                <li>🧠 <strong>Use flashcards</strong> for formulas and terms.</li>
-                <li>🔁 <strong>Practice explaining</strong> concepts aloud.</li>
-                <li>📺 <strong>Watch scientific videos</strong> or experiment simulations.</li>
-                <li>👩‍🏫 <strong>Join discussions</strong> to reinforce understanding.</li>
-              </ul>
-
-              <p className="font-bold text-lg">➗ Math – 41.35%</p>
-              <ul className="ml-4 list-disc">
-                <li>✍️ <strong>Solve problems step-by-step</strong> manually.</li>
-                <li>🔍 <strong>Analyze past mistakes</strong> and revise weak concepts.</li>
-                <li>🧩 <strong>Play math puzzles or games</strong> for fun learning.</li>
-                <li>📘 <strong>Keep a formula diary</strong> for revision.</li>
-              </ul>
-
-              <p className="font-bold text-lg">💻 Computer – 23.33%</p>
-              <ul className="ml-4 list-disc">
-                <li>👨‍💻 <strong>Practice daily coding problems</strong>.</li>
-                <li>🎮 Use <strong>interactive coding platforms</strong>.</li>
-                <li>📓 <strong>Understand concepts</strong> before jumping to code.</li>
-                <li>🧑‍🏫 <strong>Collaborate with peers</strong> for code reviews.</li>
-              </ul>
-
-              <p className="font-bold text-lg">📝 Hindi – 45.56%</p>
-              <ul className="ml-4 list-disc">
-                <li>🎧 <strong>Listen to Hindi media</strong> and repeat for fluency.</li>
-                <li>📖 <strong>Read Hindi daily</strong> – short stories, poems, articles.</li>
-                <li>✍️ <strong>Practice writing</strong> short essays and responses.</li>
-                <li>📚 <strong>Learn new words</strong> and use them in sentences.</li>
-              </ul>
-
-              <p className="font-bold text-lg">📘 English – Mixed (some &lt; 45%)</p>
-
-              <ul className="ml-4 list-disc">
-                <li>📺 <strong>Watch content with subtitles</strong> to build vocabulary.</li>
-                <li>🧾 <strong>Maintain a word diary</strong> (5 words/day).</li>
-                <li>💬 <strong>Practice speaking</strong> about daily tasks or topics.</li>
-              </ul>
-
-              <hr className="my-4 border-green-300" />
-
-              <p className="font-bold text-xl text-green-800">🌟 General Study Improvement Tips</p>
-              <ul className="ml-4 list-disc">
-                <li>⏰ <strong>Create a daily study plan</strong> and stick to it.</li>
-                <li>🔄 <strong>Revise older topics</strong> every 2–3 days.</li>
-                <li>🎯 <strong>Use active learning methods</strong> like summarizing, mapping, or peer discussion.</li>
-                <li>🧃 <strong>Stay healthy</strong> with enough rest, food, and breaks.</li>
-              </ul>
+            <div className="mt-6 p-6 border rounded-lg bg-green-50 shadow-md">
+              <h2 className="text-2xl font-bold text-green-900 mb-4">🧠 AI-Powered Learning Dashboard</h2>
+              <div className="space-y-4 text-gray-800 text-base leading-relaxed">
+                {aiTips.split("\n").map((line, index) => {
+                  if (
+                    line.match(/^(\d+\.\s|[-•])?\s?(Subject|General|Tip|Tips|Math|Science|English|Hindi|Computer)/i)
+                  ) {
+                    return (
+                      <p key={index} className="font-semibold text-green-900">
+                        {line}
+                      </p>
+                    );
+                  }
+                  if (line.trim().startsWith("-") || line.trim().startsWith("•")) {
+                    return (
+                      <p key={index} className="ml-4 before:content-['🔹'] before:mr-2">
+                        {line.replace(/^[-•]\s*/, "")}
+                      </p>
+                    );
+                  }
+                  if (line.trim().match(/^\d+\./)) {
+                    return (
+                      <p key={index} className="ml-2">
+                        <span className="font-medium text-green-800">{line}</span>
+                      </p>
+                    );
+                  }
+                  return <p key={index}>{line}</p>;
+                })}
+              </div>
             </div>
           </>
         )}
