@@ -28,7 +28,9 @@ export default function Home() {
     Papa.parse(file, {
       header: true,
       complete: (result) => {
-        const data = result.data.filter((row) => Object.values(row).some((cell) => cell !== ""));
+        const data = result.data.filter((row) =>
+          Object.values(row).some((cell) => cell !== "")
+        );
         setCsvData(data);
         calculateAverages(data);
         calculatePerformanceGroups(data);
@@ -94,11 +96,13 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-100 via-white to-blue-100 py-10 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-200 via-purple-300 to-pink-200 py-10 px-6">
+
       <div className="max-w-5xl mx-auto bg-white p-8 shadow-md rounded-md">
-        <h1 className="text-3xl font-bold text-center mb-6">📊 InsightPlan - Smart Performance Tracker</h1>
-        <p className="text-gray-600 text-center mb-4">
-          Upload a CSV file of student marks to get insights, AI tips & performance charts 📈
+        <h1 className="text-3xl font-bold text-center mb-3 text-purple-900">📊 InsightPlan - Smart Performance Tracker</h1>
+        <p className="text-gray-700 text-center mb-6">
+          InsightPlan helps teachers easily track student performance and identify weak areas using AI.
+          It offers personalized suggestions for improvement – making analysis faster, smarter & more effective.
         </p>
 
         <div className="flex items-center justify-center gap-3 mb-6">
@@ -117,7 +121,7 @@ export default function Home() {
           <>
             {/* Average Marks */}
             <div className="mt-6 p-4 border rounded-lg bg-yellow-50">
-              <h2 className="text-xl font-semibold mb-2">📉 Average Marks per Subject</h2>
+              <h2 className="text-xl font-semibold mb-2 text-yellow-900">📉 Average Marks per Subject</h2>
               <ul className="list-disc list-inside text-gray-700">
                 {Object.entries(averages).map(([subject, avg], index) => (
                   <li key={index}>
@@ -129,7 +133,7 @@ export default function Home() {
 
             {/* Performance Category Chart */}
             <div className="mt-6 p-4 border rounded-lg bg-blue-50">
-              <h2 className="text-xl font-semibold mb-2">🎯 Performance Categories (Based on Avg Marks)</h2>
+              <h2 className="text-xl font-semibold mb-2 text-blue-900">🎯 Performance Categories (Based on Avg Marks)</h2>
               <Bar
                 data={{
                   labels: ["Poor", "Mid", "Excellent"],
@@ -162,58 +166,34 @@ export default function Home() {
             </div>
 
             {/* AI Suggestions */}
-            <div className="mt-6 p-6 border rounded-lg bg-green-50 shadow-md text-gray-800 text-base leading-relaxed space-y-3">
-              <h2 className="text-2xl font-bold text-green-900 mb-4">🧠 AI-Powered Study Tips & Subject Support</h2>
-
-              <p className="font-bold text-lg">🔬 Science – 47.22%</p>
-              <ul className="ml-4 list-disc">
-                <li>🧠 <strong>Use flashcards</strong> for formulas and terms.</li>
-                <li>🔁 <strong>Practice explaining</strong> concepts aloud.</li>
-                <li>📺 <strong>Watch scientific videos</strong> or experiment simulations.</li>
-                <li>👩‍🏫 <strong>Join discussions</strong> to reinforce understanding.</li>
-              </ul>
-
-              <p className="font-bold text-lg">➗ Math – 41.35%</p>
-              <ul className="ml-4 list-disc">
-                <li>✍️ <strong>Solve problems step-by-step</strong> manually.</li>
-                <li>🔍 <strong>Analyze past mistakes</strong> and revise weak concepts.</li>
-                <li>🧩 <strong>Play math puzzles or games</strong> for fun learning.</li>
-                <li>📘 <strong>Keep a formula diary</strong> for revision.</li>
-              </ul>
-
-              <p className="font-bold text-lg">💻 Computer – 23.33%</p>
-              <ul className="ml-4 list-disc">
-                <li>👨‍💻 <strong>Practice daily coding problems</strong>.</li>
-                <li>🎮 Use <strong>interactive coding platforms</strong>.</li>
-                <li>📓 <strong>Understand concepts</strong> before jumping to code.</li>
-                <li>🧑‍🏫 <strong>Collaborate with peers</strong> for code reviews.</li>
-              </ul>
-
-              <p className="font-bold text-lg">📝 Hindi – 45.56%</p>
-              <ul className="ml-4 list-disc">
-                <li>🎧 <strong>Listen to Hindi media</strong> and repeat for fluency.</li>
-                <li>📖 <strong>Read Hindi daily</strong> – short stories, poems, articles.</li>
-                <li>✍️ <strong>Practice writing</strong> short essays and responses.</li>
-                <li>📚 <strong>Learn new words</strong> and use them in sentences.</li>
-              </ul>
-
-              <p className="font-bold text-lg">📘 English – Mixed (some &lt; 45%)</p>
-
-              <ul className="ml-4 list-disc">
-                <li>📺 <strong>Watch content with subtitles</strong> to build vocabulary.</li>
-                <li>🧾 <strong>Maintain a word diary</strong> (5 words/day).</li>
-                <li>💬 <strong>Practice speaking</strong> about daily tasks or topics.</li>
-              </ul>
-
-              <hr className="my-4 border-green-300" />
-
-              <p className="font-bold text-xl text-green-800">🌟 General Study Improvement Tips</p>
-              <ul className="ml-4 list-disc">
-                <li>⏰ <strong>Create a daily study plan</strong> and stick to it.</li>
-                <li>🔄 <strong>Revise older topics</strong> every 2–3 days.</li>
-                <li>🎯 <strong>Use active learning methods</strong> like summarizing, mapping, or peer discussion.</li>
-                <li>🧃 <strong>Stay healthy</strong> with enough rest, food, and breaks.</li>
-              </ul>
+            <div className="mt-6 p-6 border rounded-lg bg-green-50 shadow-md">
+              <h2 className="text-2xl font-bold text-green-900 mb-4">🧠 AI-Powered Learning Dashboard</h2>
+              <div className="space-y-4 text-gray-800 text-base leading-relaxed">
+                {aiTips.split("\n").map((line, index) => {
+                  if (line.match(/^(\d+\.\s|[-•])?\s?(Subject|General|Tip|Tips|Math|Science|English|Computer)/i)) {
+                    return (
+                      <p key={index} className="font-semibold text-green-900">
+                        {line}
+                      </p>
+                    );
+                  }
+                  if (line.trim().startsWith("-") || line.trim().startsWith("•")) {
+                    return (
+                      <p key={index} className="ml-4 before:content-['🔹'] before:mr-2">
+                        {line.replace(/^[-•]\s*/, "")}
+                      </p>
+                    );
+                  }
+                  if (line.trim().match(/^\d+\./)) {
+                    return (
+                      <p key={index} className="ml-2">
+                        <span className="font-medium text-green-800">{line}</span>
+                      </p>
+                    );
+                  }
+                  return <p key={index}>{line}</p>;
+                })}
+              </div>
             </div>
           </>
         )}
