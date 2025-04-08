@@ -1,3 +1,39 @@
+# InsightPlan 📊 - AI-Powered Student Performance Suggestions
+
+**InsightPlan** is an intelligent backend API that uses Groq's LLaMA3 model to analyze student performance (in CSV format) and generate personalized, subject-wise study suggestions with improvement tips.
+
+This is designed for use in personalized education tools such as student dashboards, teacher-assist platforms, or educational analytics software.
+
+---
+
+## 🚀 Features
+
+- 📁 Accepts CSV student performance data (supports both numeric and rating-based formats).
+- 🧠 Uses Groq’s LLaMA3 model to generate subject-wise study tips dynamically.
+- 📋 Skips subjects with no valid data (no placeholder or empty sections).
+- 📝 Returns well-formatted, markdown-style study tips with bold titles, emojis, and pro tips.
+- 💪 Adds a final general improvement tips section for all students.
+- ⚡️ Built with **Node.js** and **Next.js API routes** (`/pages/api/suggest.js`).
+
+---
+
+## 📂 Example Input (CSV)
+
+| Name     | Math | Science | English | Social Studies | Computer | Hindi | Pass |
+|----------|------|---------|---------|----------------|----------|-------|------|
+| John     | 70   | Good    | 75      | Average        | 60       | 65    | Yes  |
+| Priya    | 55   | Average | 71      | Good           | 58       | 66    | Yes  |
+| Ayaan    | 60   | Bad     | 73      | Average        | Bad      | 64    | Yes  |
+
+This will be parsed into a JSON array and sent to the API.
+
+---
+
+## 📦 API Usage
+
+### 🔗 Endpoint
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 ## Getting Started
