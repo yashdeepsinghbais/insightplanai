@@ -2,6 +2,11 @@
 import React, { useRef } from "react";
 import { FaPlus } from "react-icons/fa";
 
+// Function to escape problematic characters (quotes)
+const escapeString = (str) => {
+  return str.replace(/["']/g, '\\$&'); // Escapes double and single quotes
+};
+
 const UploadCSV = ({ onDataParsed }) => {
   const fileInputRef = useRef();
 
@@ -16,7 +21,7 @@ const UploadCSV = ({ onDataParsed }) => {
     const data = lines.slice(1).map((line) => {
       const values = line.split(",");
       return headers.reduce((obj, header, i) => {
-        obj[header] = values[i];
+        obj[escapeString(header)] = escapeString(values[i]); // Escape headers and values
         return obj;
       }, {});
     });

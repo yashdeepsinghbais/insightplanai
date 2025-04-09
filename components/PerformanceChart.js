@@ -95,9 +95,13 @@ export default function Home() {
     }
   };
 
+  // Function to escape problematic characters (quotes)
+  const escapeString = (str) => {
+    return str.replace(/["']/g, '\\$&'); // Escapes double and single quotes
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-200 via-purple-300 to-pink-200 py-10 px-6">
-
       <div className="max-w-5xl mx-auto bg-white p-8 shadow-md rounded-md">
         <h1 className="text-3xl font-bold text-center mb-3 text-purple-900">📊 InsightPlan - Smart Performance Tracker</h1>
         <p className="text-gray-700 text-center mb-6">
@@ -155,7 +159,7 @@ export default function Home() {
                       callbacks: {
                         label: function (context) {
                           const category = context.label;
-                          const names = performanceGroups[category].join(", ");
+                          const names = escapeString(performanceGroups[category].join(", "));
                           return `${context.dataset.label}: ${context.raw}\n${names}`;
                         },
                       },
@@ -170,28 +174,22 @@ export default function Home() {
               <h2 className="text-2xl font-bold text-green-900 mb-4">🧠 AI-Powered Learning Dashboard</h2>
               <div className="space-y-4 text-gray-800 text-base leading-relaxed">
                 {aiTips.split("\n").map((line, index) => {
-                  if (line.match(/^(\d+\.\s|[-•])?\s?(Subject|General|Tip|Tips|Math|Science|English|Computer)/i)) {
+                  const safeLine = escapeString(line); // Escape line if needed
+                  if (safeLine.match(/^(\d+\.\s|[-•])?\s?(Subject|General|Tip|Tips|Math|Science|English|Computer)/i)) {
                     return (
                       <p key={index} className="font-semibold text-green-900">
-                        {line}
+                        {safeLine}
                       </p>
                     );
                   }
-                  if (line.trim().startsWith("-") || line.trim().startsWith("•")) {
+                  if (safeLine.trim().startsWith("-") || safeLine.trim().startsWith("•")) {
                     return (
                       <p key={index} className="ml-4 before:content-['🔹'] before:mr-2">
-                        {line.replace(/^[-•]\s*/, "")}
+                        {safeLine.replace(/^[-•]\s*/, "")}
                       </p>
                     );
                   }
-                  if (line.trim().match(/^\d+\./)) {
-                    return (
-                      <p key={index} className="ml-2">
-                        <span className="font-medium text-green-800">{line}</span>
-                      </p>
-                    );
-                  }
-                  return <p key={index}>{line}</p>;
+                  return <p key={index}>{safeLine}</p>;
                 })}
               </div>
             </div>

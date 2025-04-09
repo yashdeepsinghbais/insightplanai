@@ -116,7 +116,7 @@ export default function Home() {
             Please ensure your CSV file includes the following columns for accurate analysis:
           </p>
           <ul className="list-disc ml-6 text-sm text-gray-800 space-y-1">
-            <li><strong>Name</strong> – Student's full name</li>
+            <li><strong>Name</strong> – Student&apos;s full name</li>
             <li><strong>Math</strong> – Marks in Mathematics</li>
             <li><strong>Science</strong> – Marks in Science</li>
             <li><strong>Computer</strong> – Marks in Computer Science</li>
@@ -125,7 +125,7 @@ export default function Home() {
           </ul>
           <p className="mt-2 text-gray-600 text-sm">
             🔄 <strong>You can also add extra columns</strong> like <em>Attendance, Participation, Discipline</em>, etc.
-            These won't affect performance analysis unless they are numeric and treated like marks.
+            These won&apos;t affect performance analysis unless they are numeric and treated like marks.
           </p>
           <p className="mt-1 text-gray-600 text-sm">
             ✅ The app will auto-detect numeric fields (excluding "Name" and "Pass") and calculate performance based on them.
