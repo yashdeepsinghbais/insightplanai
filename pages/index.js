@@ -106,7 +106,7 @@ export default function Home() {
           📊 InsightPlan - Smart Performance Tracker
         </h1>
         <p className="text-gray-600 text-center mb-4">
-          Upload a CSV file of student marks to get insights, AI tips & performance charts 📈
+          Upload a CSV file of student marks to get insights, AI tips &amp; performance charts 📈
         </p>
 
         {/* CSV Format Instructions */}
